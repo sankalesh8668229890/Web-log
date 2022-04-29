@@ -8,9 +8,12 @@ const isValidObjectId = (objectId) => mongoose.Types.ObjectId.isValid(objectId);
 const createBlog = async function (req, res) {
   try {
     let data = req.body;
-    if (!isValidObjectId(data.authorId)) {
-      return res.send("NOT A VALID AUTHOR ID");
-    }
+    // if (!isValidObjectId(data.authorId)) {
+    //   return res.status(400).send({status:false,msg:"NOT A VALID AUTHOR ID"});
+    // }
+    if(!data.title){return res.status(400).send({status:false,msg:"Kindly add title"})}
+    if(!data.body){return res.status(400).send({status:false,msg:"EMPTY BODY"})}
+    
     let condition = await authorModel.findById(data.authorId);
     if (condition) {
       if (data.isPublished == true) {
@@ -33,9 +36,10 @@ const createBlog = async function (req, res) {
 const getBlog = async function (req, res) {
   try {
     let data = req.query;
+    
     let getData = await BlogModel.find({
       $and: [{ isDeleted: false }, { isPublished: true }, data],
-    }).populate("authorId");
+    })
 
     if (getData.length === 0) {
       return res.status(400).send({
@@ -57,7 +61,7 @@ const updateBlog = async function (req, res) {
     let getId = req.params.blogId;
     let data = req.body; // data to be updated
     let checkId = await BlogModel.findById(getId);
-    if (checkId) {
+    
       if (checkId.isDeleted === false) {
         let check = await BlogModel.findByIdAndUpdate(
           getId,
@@ -80,11 +84,7 @@ const updateBlog = async function (req, res) {
           .status(400)
           .send({ status: false, msg: "CANT UPDATE , IT IS DELETED" });
       }
-    } else {
-      res
-        .status(400)
-        .send({ status: false, msg: "Please enter valid Blog id" });
-    }
+    
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -148,9 +148,9 @@ const deletebyquery = async function (req, res) {
     let saved = await BlogModel.updateMany(data, {
       $set: { isDeleted: true, deletedAt: Date.now() },
     });
-    res.status(200).send({ status: true, msg: "Blog is deleted" });
+    res.status(200).send({ status: true, data: (`${saved.modifiedcount}`<=1 ) ? `${saved.modifiedCount} BLOG DELETED`:`${saved.modifiedCount} BLOGS DELETED`})
   } catch (err) {
-    res.status(500).send({ msg: err.message });
+    res.status(500).send({ status:false,msg: err.message });
   }
 };
 module.exports = { createBlog, getBlog, updateBlog, deleteBlog, deletebyquery };
