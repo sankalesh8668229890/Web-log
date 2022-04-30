@@ -15,7 +15,7 @@ const auth1 = async function (req, res, next) {
   let decodedtoken = jwt.verify(token, "ProjectBlog");
 
   //res.locals.decodedtoken = JSON.stringify(decodedtoken);
-  res.locals.decodedtoken = decodedtoken;
+  req.decodedtoken = decodedtoken;
 
   next();
 };
