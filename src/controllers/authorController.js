@@ -10,11 +10,13 @@ let createauthor = async function (req, res) {
 
         // VALIDATION
 
-        if (!data.email) { return res.status(400).send({ status: false, msg: "EMAIL CANT BE EMPTY" }) }
+        
         if (!data.firstName) { return res.status(400).send({ status: false, msg: "FIRST NAME REQUIRED" }) }
         if (!data.lastName) { return res.status(400).send({ status: false, msg: "LAST NAME REQUIRED  " }) }
-        if (!data.password) { return res.status(400).send({ status: false, msg: "Password cant be empty" }) }
         if (!data.title) { return res.status(400).send({ status: false, msg: "Add title" }) }
+        if (!data.email) { return res.status(400).send({ status: false, msg: "EMAIL CANT BE EMPTY" }) }
+        if (!data.password) { return res.status(400).send({ status: false, msg: "Password cant be empty" }) }
+       
 // REGEX VALIDATION
         if (!data.firstName.match(regex)) return res.status(400).send({ status: false, msg: "FIRSTNAME HAS SOME PROPERTIES VISIT OUR WEBSITE" })
         if (!data.lastName.match(regex)) return res.status(400).send({ status: false, msg: "LASTNAME HAS SOME PROPERTIES VISIT OUR WEBSITE" })
