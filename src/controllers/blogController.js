@@ -11,7 +11,7 @@ const createBlog = async function (req, res) {
   try {
     let data = req.body;
     //console.log(isValidObjectId(data.authorId))
-
+    let decodedtoken= req.decodedtoken
     //VALIDATION
     if(!data.title)return res.status(400).send({status :FALSE , msg:" PLEASE ENTER TITLE"})
     if(!data.body)return res.status(400).send({status :FALSE , msg:" PLEASE ENTER BODY"})
@@ -20,6 +20,7 @@ const createBlog = async function (req, res) {
     if (!isValidObjectId(data.authorId)) {
       return res.send("NOT A VALID AUTHOR ID");
     }
+    if(decodedtoken.authorId !== data.authorId) return res.status(400).send({status:false,msg : "YOU ARE NOT AUTHORIZED TO CRAETE BLOG WITH THIS AUTHER ID"})
 
 
     //LOGIC
@@ -27,7 +28,7 @@ const createBlog = async function (req, res) {
     if (condition) {
       if (data.isPublished == true) {
         data.publishedAt = Date.now();
-
+        
         let savedData = await BlogModel.create(data);
         res.status(201).send({ status: true, msg: savedData });
       } else {
@@ -45,7 +46,7 @@ const createBlog = async function (req, res) {
 const getBlog = async function (req, res) {
   try {
     let data = req.query;
-    console.log(data)
+    //console.log(data)
     let getData = await BlogModel.find({
       $and: [{ isDeleted: false }, { isPublished: true }, data]
     }).populate("authorId");
@@ -69,7 +70,7 @@ const updateBlog = async function (req, res) {
 
     let getId = req.params.blogId;
     let data = req.body;  
-    console.log(data)
+    //console.log(data)
     let checkId = await BlogModel.findById(getId); //wa can use findOne also
     if (checkId) {
       if (checkId.isDeleted === false) {
@@ -90,7 +91,7 @@ const updateBlog = async function (req, res) {
         //console.log(check);
         let a = check.tags.flat(); //[one,[two,three]] = [one,two,three]
         let b = check.subcategory.flat();
-        console.log(a);
+        //console.log(a);
         let updateSecondTime = await BlogModel.findByIdAndUpdate(
           getId,
           {
