@@ -10,7 +10,7 @@ const {auth1,auth2}=require('../middlewares/commonMiddlewares')
 
 router.post('/login', login)
 router.post('/authors',authorcontroller.createauthor)
-router.post ('/createBlog',blogController.createBlog)
+router.post ('/createBlog',auth1,blogController.createBlog)
 
 router.get ('/getBlog',auth1,blogController.getBlog)
 

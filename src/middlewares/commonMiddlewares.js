@@ -25,7 +25,7 @@ const auth2 = async function (req, res, next) {
   let get = await Blogmodel.findById(blogId).select({ authorId: 1, _id: 0 });
   if(!get){return res.status(400).send({ status: false, msg: "Please enter valid Blog id" });}
   
-  let token = req.headers["x-auth-token"];
+  let token = req.headers["x-auth-token"]; 
   if (!token) {
     return res.status(400).send({ status: false, msg: "KINDLY ADD TOKEN" });
   }

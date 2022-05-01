@@ -1,13 +1,14 @@
 let authorModel = require("../models/authormodel");
 let BlogModel = require("../models/Blogmodel");
-const jwt = require("jsonwebtoken");
-
 const mongoose = require("mongoose");
-const isValidObjectId = (objectId) => mongoose.Types.ObjectId.isValid(objectId);
+
+
+ const isValidObjectId = (objectId) => mongoose.Types.ObjectId.isValid(objectId);
 
 const createBlog = async function (req, res) {
   try {
     let data = req.body;
+    
     if (!isValidObjectId(data.authorId)) {
       return res.send("NOT A VALID AUTHOR ID");
     }
@@ -41,7 +42,7 @@ const getBlog = async function (req, res) {
       return res.status(400).send({
         status: false,
         error: "Page not found",
-        msg: "EITHER DELETED OR NOT PUBLISHED",
+        msg: "EITHER DELETED OR NOT PUBLISHED", 
       });
     }
 
@@ -59,7 +60,7 @@ const updateBlog = async function (req, res) {
     let getId = req.params.blogId;
     let data = req.body;
     console.log(data)
-    let checkId = await BlogModel.findById(getId);
+    let checkId = await BlogModel.findById(getId); //wa can use findOne also
     if (checkId) {
       if (checkId.isDeleted === false) {
         //ispublished true add krnapdega
@@ -129,7 +130,7 @@ const deleteBlog = async function (req, res) {
 
       return res.status(200).send({ msg: save });
     } else {
-      res.status(404).send({ status: false, msg: "already deleted" });
+      res.status(404).send({ status: false, msg: "AlREADY DELETED" });
     }
   } catch (error) {
     res.status(500).send({ status: false, msg: error.message });
@@ -167,7 +168,7 @@ const deletebyquery = async function (req, res) {
       );
 
       if (allblog.modifiedCount == 0) {
-        return res.status(400).send({ status: false, msg: "No blog deleted" });
+        return res.status(400).send({ status: false, msg: "No blog to be deleted" });
       } else res.status(200).send({ status: true, data: allblog });
     } else {
       res.send({ status: false, msg: "author is not valid" });
