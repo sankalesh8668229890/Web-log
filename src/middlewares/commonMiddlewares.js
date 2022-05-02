@@ -9,6 +9,7 @@ const auth1 = async function (req, res, next) {
   
   try{
   let token = req.headers["x-auth-token"];
+  if(!token) token = req.headers["X-auth-token"]
   if (!token) {
     return res.status(400).send({ status: false, msg: "KINDLY ADD TOKEN" });
   }
@@ -30,6 +31,7 @@ const auth2 = async function (req, res, next) {
   if(!get){return res.status(400).send({ status: false, msg: "Please enter valid Blog id" });}
   
   let token = req.headers["x-auth-token"]
+  if(!token) token = req.headers["X-auth-token"]
   if (!token) {
     return res.status(400).send({ status: false, msg: "KINDLY ADD TOKEN" });
   }

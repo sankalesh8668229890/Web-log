@@ -178,7 +178,7 @@ const deletebyquery = async function (req, res) {
 
       if (allblog.modifiedCount == 0) {
         return res.status(400).send({ status: false, msg: "No blog to be deleted" });
-      } else res.status(200).send({ status: true, data: `${allblog.modifiedCount} BLOG DELETED`});
+      } else res.status(200).send({ status: true, data: `(${allblog.modifiedCount}`==1  ? `${allblog.modifiedCount}-BLOG DELETED` : `${allblog.modifiedCount}-BLOGS DELETED` });
     } else {
       res.send({ status: false, msg: "author is not valid" });
     }
