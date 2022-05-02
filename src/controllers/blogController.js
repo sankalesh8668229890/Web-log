@@ -149,8 +149,14 @@ const deleteBlog = async function (req, res) {
 //delet by query
 const deletebyquery = async function (req, res) {
   try {
-    data = req.query; //catched data
-
+    data = req.query;
+    //catched data
+    if (Object.keys(data).length == 0) {
+            //-> if data undefined
+            return res.status(400).send({
+                status: false,
+                msg: "MUST BE ANY QUERY"
+            });
      let decodedtoken=req.decodedtoken;
     
 
