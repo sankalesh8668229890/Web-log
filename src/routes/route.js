@@ -14,16 +14,16 @@ router.post('/login', login)
 router.post('/authors',authorcontroller.createauthor)
 
 //to create blog
-router.post ('/createBlog',auth1,blogController.createBlog)
+router.post ('/blogs',auth1,blogController.createBlog)
 
 //to get blog list of all blog
-router.get ('/getBlog',auth1,blogController.getBlog)
+router.get ('/blogs',auth1,blogController.getBlog)
 
 // to update blog data
-router.put('/updateBlog/:blogId',auth2,blogController.updateBlog)
+router.put('/blogs/:blogId',auth2,blogController.updateBlog)
 
 //to delete blog by it's id 
-router.delete('/deleteBlog/:blogId',auth2,blogController.deleteBlog)
+router.delete('/blogs/:blogId',auth2,blogController.deleteBlog)
 
 //to delete blog by it's properties (query)
 router.delete('/deletebyquery',auth1,blogController.deletebyquery)
