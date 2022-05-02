@@ -156,7 +156,7 @@ const deletebyquery = async function (req, res) {
             return res.status(400).send({
                 status: false,
                 msg: "MUST BE ANY QUERY"
-            });
+            })};
      let decodedtoken=req.decodedtoken;
     
 
