@@ -14,7 +14,7 @@ const login = async function (req, res) {
 
   if (!get){return res.status(400).send({status:false,msg:"YOUR EMAIL OR PASSWORD IS INCORRECT"})}
   let token = jwt.sign({authorId:get._id.toString()},"ProjectBlog")
-  res.setHeader("x-auth-token",token)
+  res.setHeader("x-api-key",token)
   res.status(200).send({status:true,msg:"YOU ARE SUCCESFULLY LOGGED IN"})
 }
 module.exports.login=login
