@@ -161,10 +161,10 @@ const deletebyquery = async function (req, res) {
       return res.send({ status: false, msg: "NO CRITERIA MATCHES" });
     //console.log(findblog)
 
-    let findauthor = findblog[0].authorId;
-    //console.log(findauthor.toString())
+    // let findauthor = findblog[0].authorId;
+    // //console.log(findauthor.toString())
 
-    if (decodedtoken.authorId == findauthor.toString()) {
+    // if (decodedtoken.authorId == findauthor.toString()) {
       let allblog = await BlogModel.updateMany(
         {
           $and: [
@@ -177,12 +177,14 @@ const deletebyquery = async function (req, res) {
       );
 
       if (allblog.modifiedCount == 0) {
-        return res.status(400).send({ status: false, msg: "No blog to be deleted" });
-      } else res.status(200).send({ status: true, data: `(${allblog.modifiedCount}`==1  ? `${allblog.modifiedCount}-BLOG DELETED` : `${allblog.modifiedCount}-BLOGS DELETED` });
-    } else {
-      res.send({ status: false, msg: "author is not valid" });
-    }
-  } catch (err) {
+        return res.status(400).send({ status: false, msg: "ALREADY DELETED" });
+      } else res.status(200).send({  status: true, data:  `${allblog.modifiedCount}-DELETED` });
+    } 
+    // else {
+    //   res.send({ status: false, msg: "author is not valid" });
+    // }
+  //}
+   catch (err) {
     res.status(500).send({ msg: err.message });
   }
 };
