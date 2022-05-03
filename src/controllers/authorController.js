@@ -27,7 +27,7 @@ let createauthor = async function (req, res) {
         
         //LOGIC
         let save = await authormodel.create(data)
-        res.status(200).send({ msg: save })
+        res.status(201).send({ status:true,data: save })
     } catch (error) {
         res.status(500).send({ status: false, msg: error.message })
     }

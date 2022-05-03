@@ -18,7 +18,7 @@ const createBlog = async function (req, res) {
     if(!data.category)return res.status(400).send({status :FALSE , msg:" PLEASE ENTER CATEGORY"})
     if(!data.authorId) return res.status(400).send({status :FALSE , msg:" PLEASE ENTER AUTHOR ID"})
     if (!isValidObjectId(data.authorId)) {
-      return res.send("NOT A VALID AUTHOR ID");
+      return res.status(400).send("NOT A VALID AUTHOR ID");
     }
     if(decodedtoken.authorId !== data.authorId) return res.status(400).send({status:false,msg : "YOU ARE NOT AUTHORIZED TO CRAETE BLOG WITH THIS AUTHER ID"})
 
@@ -30,10 +30,10 @@ const createBlog = async function (req, res) {
         data.publishedAt = Date.now();
         
         let savedData = await BlogModel.create(data);
-        res.status(201).send({ status: true, msg: savedData });
+        res.status(201).send({ status: true,data: savedData });
       } else {
         let savedData = await BlogModel.create(data);
-        res.status(201).send({ status: true, msg: savedData });
+        res.status(201).send({ status: true,data: savedData });
       }
     } else {
       res.status(400).send({ status: false, msg: "authorId is not present" });
@@ -102,7 +102,7 @@ const updateBlog = async function (req, res) {
         );
 
 
-        res.status(200).send({ status: true, msg: updateSecondTime });
+        res.status(200).send({ status: true, data: updateSecondTime });
       } else {
         res
           .status(400)
@@ -137,7 +137,7 @@ const deleteBlog = async function (req, res) {
         { new: true }
       );
 
-      return res.status(202).send({status:true, msg : "BLOG IS  DELETED" }); //cmd on sunday
+      return res.status(200).send({status:true, msg : "BLOG IS  DELETED" }); //cmd on sunday
     } else {
       res.status(404).send({ status: false, msg: "AlREADY DELETED" });
     }
