@@ -20,7 +20,7 @@ const createBlog = async function (req, res) {
     if (!isValidObjectId(data.authorId)) {
       return res.status(400).send("NOT A VALID AUTHOR ID");
     }
-    if(decodedtoken.authorId !== data.authorId) return res.status(400).send({status:false,msg : "YOU ARE NOT AUTHORIZED TO CRAETE BLOG WITH THIS AUTHER ID"})
+    if(decodedtoken.authorId !== data.authorId) return res.status(400).send({status:false,msg : "YOU ARE NOT AUTHORIZED TO CREATE BLOG WITH THIS AUTHOR ID"})
 
 
     //LOGIC
@@ -149,7 +149,7 @@ const deleteBlog = async function (req, res) {
 //delet by query
 const deletebyquery = async function (req, res) {
   try {
-    data = req.query;
+    let data = req.query;
     //catched data
     if (Object.keys(data).length == 0) {
             //-> if data undefined
@@ -171,6 +171,7 @@ const deletebyquery = async function (req, res) {
     // //console.log(findauthor.toString())
 
     // if (decodedtoken.authorId == findauthor.toString()) {
+      
       let allblog = await BlogModel.updateMany(
         {
           $and: [
