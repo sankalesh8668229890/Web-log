@@ -12,6 +12,7 @@ let createauthor = async function (req, res) {
         if (!data.fname) { return res.status(400).send({ status: false, msg: "FIRST NAME REQUIRED" }) }
         if (!data.lname) { return res.status(400).send({ status: false, msg: "LAST NAME REQUIRED  " }) }
         if (!data.title) { return res.status(400).send({ status: false, msg: "Add title" }) }
+        if(!data.title == "Mr" || "Mrs" || "Miss"){return res.status(400).send({ status: false, msg: "ONLY Mr,Mrs,Miss ARE VALID IN TITLE"}) }
         if (!data.email) { return res.status(400).send({ status: false, msg: "EMAIL CANT BE EMPTY" }) }
         if (!data.password) { return res.status(400).send({ status: false, msg: "PASSWORD CAN'T BE EMPTY" }) }
        
