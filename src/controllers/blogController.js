@@ -13,10 +13,10 @@ const createBlog = async function (req, res) {
     //console.log(isValidObjectId(data.authorId))
     let decodedtoken= req.decodedtoken
     //VALIDATION
-    if(!data.title)return res.status(400).send({status :FALSE , msg:" PLEASE ENTER TITLE"})
-    if(!data.body)return res.status(400).send({status :FALSE , msg:" PLEASE ENTER BODY"})
-    if(!data.category)return res.status(400).send({status :FALSE , msg:" PLEASE ENTER CATEGORY"})
-    if(!data.authorId) return res.status(400).send({status :FALSE , msg:" PLEASE ENTER AUTHOR ID"})
+    if(!data.title)return res.status(400).send({status :false , msg:" PLEASE ENTER TITLE"})
+    if(!data.body)return res.status(400).send({status :false , msg:" PLEASE ENTER BODY"})
+    if(!data.category)return res.status(400).send({status :false , msg:" PLEASE ENTER CATEGORY"})
+    if(!data.authorId) return res.status(400).send({status :false , msg:" PLEASE ENTER AUTHOR ID"})
     if (!isValidObjectId(data.authorId)) {
       return res.status(400).send("NOT A VALID AUTHOR ID");
     }
