@@ -19,7 +19,7 @@ let createauthor = async function (req, res) {
         if (!data.fname.match(regex)) return res.status(400).send({ status: false, msg: "FIRSTNAME SHOULD ONLY CONATIN ALPHABATS AND LENTH MUST BE IN BETWEEN 2-30" })
         if (!data.lname.match(regex)) return res.status(400).send({ status: false, msg: "LASTNAME SHOULD ONLY CONATIN ALPHABATS AND LENTH MUST BE IN BETWEEN 2-30" })
         if (!data.email.match(emailregex)) return res.status(400).send({ status: false, msg: "EMAIL IS NOT IN VALID FORMAT" })
-        
+        if(data.title!="Mr" || data.title!="Miss" || data.title!="Mrs"){return res.status(400).send({status:false,msg:"TITLE CAN BE Mr,Miss,Mrs"})}
         const duplicate = await authormodel.findOne({ email: data.email })
         if (duplicate) {
             return res.status(400).send({ status: false, msg: "EMAIL ALREADY EXISTS" })
