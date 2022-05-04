@@ -26,6 +26,7 @@ const createBlog = async function (req, res) {
     //LOGIC
     let condition = await authorModel.findById(data.authorId);
     if (condition) {
+      if(data.isDeleted==true){return res.status(400).send({status:false,msg:"Cant delete without creation"})}
       if (data.isPublished == true) {
         data.publishedAt = Date.now();
         
